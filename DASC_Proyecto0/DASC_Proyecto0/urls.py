@@ -20,5 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Custom paths
+    path('', include(('events.urls', 'events'), namespace='events')),
+    path('users/', include(('users.urls', 'users'), namespace='users')),
 
 ]

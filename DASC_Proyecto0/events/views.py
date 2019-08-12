@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+# Test
+from django.http import HttpResponse
+
+def list_events(request):
+    return HttpResponse('Hello List Events')
