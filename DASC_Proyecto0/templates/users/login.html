@@ -6,7 +6,10 @@
 
 {% block container %}
     <div class="login-form">
-
+        {% if error %}
+            <p class="alert alert-danger">{{ error }}</p>
+        {% endif%}
+        
         <form method="POST" action="{% url 'users:login' %}">
             
             {% csrf_token %}

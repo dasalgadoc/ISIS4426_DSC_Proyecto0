@@ -54,3 +54,35 @@ class SignupForm(forms.Form):
 
         password_retrieval.save()
 
+
+class ForgotPasswordForm(forms.Form):
+    """ Password retrieval form """
+    username = forms.CharField(min_length = 5, max_length = 140, required = True)
+
+    secret_question = forms.CharField(max_length = 140, required = False)
+    secret_answer = forms.CharField(max_length = 100, required = False)
+
+    #password = forms.CharField(max_length = 35, required = False)
+    #password_confirmation = forms.CharField(max_length = 35, required = False)
+    
+    def clean(self):
+        """ Verify password confirmation match. """
+
+        data = super().clean()
+
+        username = data['username']
+        secret_question = data['secret_question']
+        secret_answer = data['secret_answer']
+        
+        user = User.objects.get(username=username)
+        
+        password_retrieval = PasswordRetrieval.objects.get(user=user)
+        
+        real_secret_question = password_retrieval.secret_question
+        real_secret_answer = password_retrieval.secret_answer
+
+        if secret_question != real_secret_question or secret_answer != real_secret_answer:
+            #raise forms.ValidationError({'username': ["Datos de recuperación no validos!",]})
+            raise forms.ValidationError("Datos de recuperación no validos!")
+
+        return data

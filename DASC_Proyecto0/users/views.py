@@ -7,7 +7,11 @@ from django.shortcuts import render, redirect
 
 # Forms
 
-from users.forms import SignupForm
+from users.forms import SignupForm, ForgotPasswordForm
+
+# Models
+
+from django.contrib.auth.models import User
 
 # Test
 from django.http import HttpResponse
@@ -57,10 +61,23 @@ def signup(request):
 
 def forgot_password(request):
     """ Controllers that handles with password forget users """
+    
     if request.method == 'POST':
-        pass
+        form = ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            
+            user = data['username']
+            print(User.objects.get(username=user).password)
+
+            
+    else:
+        form = ForgotPasswordForm()
     
     return render(
         request = request,
-        template_name= 'users/retrieval.html'
+        template_name= 'users/retrieval.html',
+        context={
+            'form': form
+        }
     )
