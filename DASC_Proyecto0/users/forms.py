@@ -9,6 +9,8 @@ from django import forms
 from django.contrib.auth.models import User
 from users.models import PasswordRetrieval
 
+# Util
+import re
 
 class SignupForm(forms.Form):
     """ Custom form to sign up new users """
@@ -25,6 +27,11 @@ class SignupForm(forms.Form):
         username = self.cleaned_data['username']
         username_taken = User.objects.filter(username=username).exists()
 
+        mail_validation = re.findall(".+@.+\..+",username)
+
+        if not mail_validation:
+            raise forms.ValidationError('El usuario debe ser un email valido')
+
         if username_taken:
             raise forms.ValidationError('Este usuario ya se encuentra registrado.')
 
@@ -39,7 +46,7 @@ class SignupForm(forms.Form):
         password_confirmation = data['password_confirmation']
 
         if password != password_confirmation:
-            raise forms.ValidationError('Las contraseñas no coinciden.')
+            raise forms.ValidationError({'password': ["Las contraseñas no coinciden!",]})
 
         return data
 
