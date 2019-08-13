@@ -24,7 +24,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect('myevents')
+            return redirect('events:myevents')
         else:
             return render(request, 'users/login.html', {'error': 'Nombre de usuario o contraseña no valido'})
     
@@ -45,8 +45,8 @@ def signup(request):
         if form.is_valid():
             form.save()
             return redirect('login')
-        else:
-            form = SignupForm()
+    else:
+        form = SignupForm()
 
     return render(
         request=request,
@@ -57,4 +57,10 @@ def signup(request):
 
 def forgot_password(request):
     """ Controllers that handles with password forget users """
-    pass
+    if request.method == 'POST':
+        pass
+    
+    return render(
+        request = request,
+        template_name= 'users/retrieval.html'
+    )

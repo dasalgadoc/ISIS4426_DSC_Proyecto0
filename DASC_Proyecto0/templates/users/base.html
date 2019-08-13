@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+
+        <!-- Configuraciones generales -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block head_content %}{% endblock %}
+        
+        <!-- Estáticos -->
+        {% load staticfiles %}  
+        {% load static %}
+        
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> 
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+        <script src="{% static 'js/jquery1.12.4.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    </head>
+
+    <body>
+        
+        {% block container %}{% endblock%}
+
+    </body>
+
+</html>

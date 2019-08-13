@@ -1,0 +1,65 @@
+{% extends "users/base.html" %}
+
+{% block head_content %}
+<title>Gestión Eventos - Iniciar Sesión</title>
+{% endblock%}
+
+{% block container %}
+    <div class="login-form">
+
+        <form method="POST" action="{% url 'users:login' %}">
+            
+            {% csrf_token %}
+            
+            <h2 class="text-center">Gestión Eventos</h2>
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </span>
+                    <input type="text" class="form-control" name="username" placeholder="Usuario">		
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-lock"></i>
+                    </span>
+                    <input type="password" class="form-control" name="password" placeholder="Contraseña">				
+                </div>
+            </div>      
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary login-btn btn-block">Ingresar!</button>
+            </div>
+
+            <div class="or-seperator"></div>
+
+            <br />
+
+            <div class="form-group">
+
+                <a href="{% url 'users:signup' %}" class="col-xs-12 btn btn-success" data-toggle="modal">
+                    <i class="glyphicon glyphicon-user"></i> 
+                    <span><b>Crear cuenta</b></span>
+                </a>
+                <br />
+                
+                <br />
+                <br />
+                
+                <a href="{% url 'users:pforgot' %}" class="col-xs-12 btn btn-danger" data-toggle="modal">
+                    <i class="glyphicon glyphicon-question-sign"></i> 
+                    <span><b>Recordar Contraseña</b></span>
+                </a>
+                <br />
+                
+            </div>
+        </form>
+
+    </div>
+{% endblock %}
+        
+        
