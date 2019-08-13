@@ -47,10 +47,17 @@ class SignupForm(forms.Form):
         """ Create a new user """
 
         data = self.cleaned_data
+        secret_question = data['secret_question']
+        secret_answer = data['secret_answer']
+
         data.pop('password_confirmation')
+        data.pop('secret_question')
+        data.pop('secret_answer')
 
         user = User.objects.create_user(**data)
-        password_retrieval = PasswordRetrieval(user = user)
+        password_retrieval = PasswordRetrieval(user = user, 
+            secret_answer = secret_answer, 
+            secret_question = secret_question)
 
         password_retrieval.save()
 
