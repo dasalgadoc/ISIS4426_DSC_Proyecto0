@@ -76,8 +76,8 @@ class ForgotPasswordForm(forms.Form):
     secret_question = forms.CharField(max_length = 140, required = False)
     secret_answer = forms.CharField(max_length = 100, required = False)
 
-    #password = forms.CharField(max_length = 35, required = False)
-    #password_confirmation = forms.CharField(max_length = 35, required = False)
+    password = forms.CharField(max_length = 35, required = False)
+    password_confirmation = forms.CharField(max_length = 35, required = False)
     
     def clean(self):
         """ Verify password confirmation match. """
@@ -94,6 +94,12 @@ class ForgotPasswordForm(forms.Form):
         
         real_secret_question = password_retrieval.secret_question
         real_secret_answer = password_retrieval.secret_answer
+
+        password = data['password']
+        password_confirmation = data['password_confirmation']
+
+        if password != password_confirmation:
+            raise forms.ValidationError("Las contraseñas no coinciden!")
 
         if secret_question != real_secret_question or secret_answer != real_secret_answer:
             #raise forms.ValidationError({'username': ["Datos de recuperación no validos!",]})

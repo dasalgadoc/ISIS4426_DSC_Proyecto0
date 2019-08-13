@@ -69,7 +69,7 @@ def forgot_password(request):
             data = form.cleaned_data
             
             user = data['username']
-            print(User.objects.get(username=user).password)
+            print(User.objects.get(username=user))
 
             
     else:
