@@ -24,5 +24,10 @@ urlpatterns = [
         view=views.signup,
         name='signup'
     ),
+    path(
+        route='pforgot/',
+        view=views.forgot_password,
+        name='pforgot'
+    )
 
 ]

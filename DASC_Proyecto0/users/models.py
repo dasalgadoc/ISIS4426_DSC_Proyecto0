@@ -14,5 +14,5 @@ class PasswordRetrieval(models.Model):
 
     def __str__(self):
         """ To string method from Password Retrieval class """
-        return "Username: {} -> Question: {} -> Answer: {}".format(self.user.username, self.secret_question, self.secret_answer)
+        return "Question: {} -> Answer: {}".format(self.secret_question, self.secret_answer)
 
