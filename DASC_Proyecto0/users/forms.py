@@ -3,6 +3,7 @@
 # Django
 
 from django import forms
+from django.core.exceptions import ObjectDoesNotExist
 
 # Models
 
@@ -87,8 +88,10 @@ class ForgotPasswordForm(forms.Form):
         username = data['username']
         secret_question = data['secret_question']
         secret_answer = data['secret_answer']
-        
-        user = User.objects.get(username=username)
+        try:
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            raise forms.ValidationError("El usuario no existe!")
         
         password_retrieval = PasswordRetrieval.objects.get(user=user)
         

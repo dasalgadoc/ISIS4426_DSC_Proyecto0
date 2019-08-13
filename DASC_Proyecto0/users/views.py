@@ -69,7 +69,11 @@ def forgot_password(request):
             data = form.cleaned_data
             
             user = data['username']
-            print(User.objects.get(username=user))
+            u = User.objects.get(username=user)
+            u.set_password(data['password'])
+            u.save()
+
+            return redirect('users:login')
 
             
     else:
