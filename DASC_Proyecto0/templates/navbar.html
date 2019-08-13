@@ -1,0 +1,16 @@
+{% load static %}
+
+<nav class="navbar navbar-inverse navbar-expand-lg navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">Gestión Eventos</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="{% url 'events:myevents' %}">Home</a></li>
+            <li><a href="{% url 'events:create' %}">Crear Eventos</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'users:logout' %}"><span class="glyphicon glyphicon-log-in"></span> Cerrar sesión</a></li>
+        </ul>
+    </div>
+</nav>
