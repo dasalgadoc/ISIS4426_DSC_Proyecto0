@@ -10,7 +10,7 @@ class Category(models.Model):
 
     def __str__(self):
         """ To String method from Category class """
-        return "Category: {}".format(self.category_description)
+        return "{}".format(self.category_description)
 
 
 class EventType(models.Model):
@@ -20,7 +20,7 @@ class EventType(models.Model):
 
     def __str__(self):
         """ To String method from Event Type class """
-        return "Event Type: {}".format(self.event_type_description)
+        return "{}".format(self.event_type_description)
 
 
 class Event(models.Model):

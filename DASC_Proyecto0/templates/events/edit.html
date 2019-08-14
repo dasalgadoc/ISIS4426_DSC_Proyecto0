@@ -13,9 +13,6 @@
     </script>
     
     <div class="container">
-        <!-- Inicio: Nombre -->
-        
-        <!-- FIN: Nombre -->
         <section class="content">
             <div class="row">
                 <div class="col-md-offset-3 col-md-6">
@@ -27,45 +24,50 @@
                         <form method="POST" action="{% url 'events:edit'%}">
                             {% csrf_token %}
                             <div class="box-body">
+
                                 <div class="form-group">
                                     <label>Nombre del Evento</label>
-                                    <input name="event_name" type="text" class="form-control" required>
+                                    {{ form.event_name }}
                                 </div>
+
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Categoría</label>
-                                        <select id="CategoriaEvento" name="CategoriaEvento" type="text" class="form-control" required>
-                                            <option id="Curso_">Curso</option>
-                                            <option id="Congreso_">Congreso</option>
-                                            <option id="Seminario_">Seminario</option>
-                                            <option id="Conferencia_">Conferencia</option>
+                                        <select name="event_category" type="text" class="form-control" required>
+                                            {% for category in form.event_category %}
+                                                <option id="{{ category }}"> {{ category.category_description }} </option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Tipo de Evento</label>
-                                        <select id="TipoEvento" name="TipoEvento" type="text" class="form-control" required>
-                                            <option id="Virtual_">Virtual</option>
-                                            <option id="Presencial_">Presencial</option>
+                                        <select name="event_type" type="text" class="form-control" required>
+                                            {% for event_type in form.event_type %}
+                                                <option id="{{ event_type }}"> {{ event_type.event_type_description }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
-                                </div>    
+                                </div>   
+
                                 <div class="form-group">
                                     <label>Lugar</label>
-                                    <input id="EventSite" name="EventSite" type="text" class="form-control" required>
+                                    {{ form.event_site }}
                                 </div>
+
                                 <div class="form-group">
                                     <label>Dirección</label>
-                                    <input id="EventAddress" name="EventAddress" type="text" class="form-control" required>
+                                    {{ form.event_address }}
                                 </div>
+
                                 <div class="form-row">
-                                <div class="form-row">
+                                
                                     <div class="form-group col-md-6">
                                         <label>Fecha de Inicio</label>
                                         <div class="input-group">
                                             <div class="input-group-addon">
                                                 <i class="glyphicon glyphicon-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control" id="EventIni" name="EventIni" autocomplete="off"/>
+                                            {{ form.event_start_date }}
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
@@ -74,14 +76,18 @@
                                             <div class="input-group-addon">
                                                 <i class="glyphicon glyphicon-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control" id="EventEnd" name="EventEnd" autocomplete="off"/>
+
+                                            {{ form.event_end_date }}
+
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label>Creado por</label>
-                                    <input type="text" id="CreadorPor" name="CreadorPor" class="form-control" required readonly value="{{ user.email }}">
+                                    <input type="text" name="event_creator" class="form-control" required readonly value="{{ request.user.username }}">
                                 </div>  
+                                
                             </div>
                             <div class="box-footer">
                                 <button name="user-button" type="submit" class="btn btn-primary pull-right">
