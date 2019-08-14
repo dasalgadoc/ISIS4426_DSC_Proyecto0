@@ -26,33 +26,35 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <td> <b> Nombre </b> </td>
-                            <td> <b> Categoría </b> </td>
-                            <td> <b> Lugar </b> </td>
-                            <td> <b> Dirección </b> </td>
-                            <td> <b> Fecha Inicio </b> </td>
-                            <td> <b> Fecha Fin </b> </td>
-                            <td> <b> Tipo de Evento </b> </td>
-                            <td> <b> Acciones </b> </td>
+                            <td align="center"> <b> Nombre </b> </td>
+                            <td align="center"> <b> Categoría </b> </td>
+                            <td align="center"> <b> Lugar </b> </td>
+                            <td align="center"> <b> Dirección </b> </td>
+                            <td align="center"> <b> Fecha Inicio </b> </td>
+                            <td align="center"> <b> Fecha Fin </b> </td>
+                            <td align="center"> <b> Fecha Creación</b> </td>
+                            <td align="center"> <b> Tipo de Evento </b> </td>
+                            <td align="center"> <b> Acciones </b> </td>
                         </tr>
                     </thead>
                     <tbody>
 
                         <!-- INICIO: Tablas -->
-                        {% for i in i|rjust:10 %}
+                        {% for event in events %}
                             <tr>
-                                <td id="">Hola</td>
-                                <td id="">Hola</td>
-                                <td id="">Hola</td>
-                                <td id="">Hola</td>
-                                <td id="">Hola</td>
-                                <td id="">Hola</td>
-                                <td id="">Hola</td>
-                                <td>
-                                    <a href="{% url 'events:edit' %}?office=34" class="edit">
+                                <td>{{ event.event_name }}</td>
+                                <td align="center">{{ event.event_category.category_description }}</td>
+                                <td align="center">{{ event.event_site }}</td>
+                                <td align="center">{{ event.event_address }}</td>
+                                <td align="center">{{ event.event_start_date }}</td>
+                                <td align="center">{{ event.event_end_date }}</td>
+                                <td align="center">{{ event.event_create_date }}</td>
+                                <td align="center">{{ event.event_type.event_type_description }}</td>
+                                <td align="center">
+                                    <a href="{% url 'events:edit' %}?event={{ event.pk }}" class="edit">
                                         <i class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Editar"></i>
                                     </a>
-                                    <a href="{% url 'events:delete' %}?parameter=holamundo" class="delete">
+                                    <a href="{% url 'events:delete' %}?event={{ event.pk }}" class="delete">
                                         <i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Borrar"></i>
                                     </a>
                                 </td>

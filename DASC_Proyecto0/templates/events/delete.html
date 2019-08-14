@@ -14,16 +14,26 @@
                             <i class="fa fa-group"></i>
                             <h3 class="box-title">Eliminar evento</h3>
                         </div>
-                        <form method="POST" action="{% url 'events:edit'%}">
+                        <form method="POST" action="{% url 'events:delete'%}">
                             {% csrf_token %}
                             <div class="box-body">
-                                <p>¿Desea borrar el evento?</p>
-                                <p>NOMBRE DEL EVENTO</p>
+                                <h2>¿Desea borrar el evento?</h3>
+                                <br />
+                                <br />
+                                <h4 align="center">
+                                    {% if error %} 
+                                        {{ error }} 
+                                    {% else %}
+                                        {{ event.event_name }}
+                                    {% endif %}</h4>
+                                <br />
                                 <div class="form-group">
                                     <label>Código Único de Evento</label>
-                                    <input id="EventCodeD" name="EventCodeD" type="text" class="form-control" required readonly>
-                                    <p class="text-warning"><small>Esta acción no se puede deshacer.</small></p>
+                                    <input name="pk" type="text" class="form-control" value="{{ event.pk }}" required readonly>
                                 </div>
+                                <p class="text-warning"><small>Esta acción no se puede deshacer.</small></p>
+
+                                
                             </div>
                             <div class="modal-footer">
                                 <input type="submit" class="btn btn-danger" value="Borrar">
