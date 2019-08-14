@@ -5,6 +5,89 @@
 {% endblock%}
 
 {% block container %}
-    <h1>Hola Create</h1>
-    <a href="{% url 'events:delete' %}">Borrar Eventos</a>
+    <script>
+        $(document).ready(function(){
+            $('#EventIni').datepicker({autoclose: true, format: 'dd/mm/yyyy'});
+            $('#EventEnd').datepicker({autoclose: true, format: 'dd/mm/yyyy'});
+        });
+    </script>
+    <div class="container">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-offset-3 col-md-6">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-group"></i>
+                            <h3 class="box-title">Crear evento</h3>
+                        </div>
+                        <form method="POST" action="{% url 'events:create'%}">
+                            {% csrf_token %}
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label>Nombre del Evento</label>
+                                    <input name="event_name" type="text" class="form-control" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Categoría</label>
+                                        <select id="CategoriaEvento" name="CategoriaEvento" type="text" class="form-control" required>
+                                            <option id="Curso_">Curso</option>
+                                            <option id="Congreso_">Congreso</option>
+                                            <option id="Seminario_">Seminario</option>
+                                            <option id="Conferencia_">Conferencia</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Tipo de Evento</label>
+                                        <select id="TipoEvento" name="TipoEvento" type="text" class="form-control" required>
+                                            <option id="Virtual_">Virtual</option>
+                                            <option id="Presencial_">Presencial</option>
+                                        </select>
+                                    </div>
+                                </div>    
+                                <div class="form-group">
+                                    <label>Lugar</label>
+                                    <input id="EventSite" name="EventSite" type="text" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Dirección</label>
+                                    <input id="EventAddress" name="EventAddress" type="text" class="form-control" required>
+                                </div>
+                                <div class="form-row">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Fecha de Inicio</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control" id="EventIni" name="EventIni" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Fecha de Fin</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control" id="EventEnd" name="EventEnd" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Creado por</label>
+                                    <input type="text" id="CreadorPor" name="CreadorPor" class="form-control" required readonly value="{{ user.email }}">
+                                </div>  
+                            </div>
+                            <div class="box-footer">
+                                <button name="user-button" type="submit" class="btn btn-primary pull-right">
+                                    <i class="fa fa-save"></i>    Guardar evento
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 {% endblock %}

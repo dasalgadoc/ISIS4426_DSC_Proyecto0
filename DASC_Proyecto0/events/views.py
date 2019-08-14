@@ -22,10 +22,14 @@ def create_event(request):
 @login_required
 def edit_event(request):
     """ Edit information for event """
+    if request.method == 'GET':
+        print(request.GET)
     return render(request, 'events/edit.html')
 
 
 @login_required
 def delete_event(request):
     """ Delete an event from database """
+    if request.method == 'GET':
+        print(request.GET)
     return render(request, 'events/delete.html')

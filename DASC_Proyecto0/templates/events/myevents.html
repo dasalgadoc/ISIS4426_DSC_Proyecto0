@@ -5,6 +5,65 @@
 {% endblock%}
 
 {% block container %}
-    <h1>Hola My Events</h1>
-    <a href="{% url 'events:edit' %}">Editar Eventos</a>
+    <div class="container">
+        <!-- Inicio: Nombre -->
+
+        <div class="row">
+            <h1>Bienvenido {{ request.user.username }}</h1>
+        </div>
+
+        <!-- FIN: Nombre-->
+
+        <div class="row">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h2> Lista de tus <b>Eventos</b></h2>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <td> <b> Nombre </b> </td>
+                            <td> <b> Categoría </b> </td>
+                            <td> <b> Lugar </b> </td>
+                            <td> <b> Dirección </b> </td>
+                            <td> <b> Fecha Inicio </b> </td>
+                            <td> <b> Fecha Fin </b> </td>
+                            <td> <b> Tipo de Evento </b> </td>
+                            <td> <b> Acciones </b> </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <!-- INICIO: Tablas -->
+                        {% for i in i|rjust:10 %}
+                            <tr>
+                                <td id="">Hola</td>
+                                <td id="">Hola</td>
+                                <td id="">Hola</td>
+                                <td id="">Hola</td>
+                                <td id="">Hola</td>
+                                <td id="">Hola</td>
+                                <td id="">Hola</td>
+                                <td>
+                                    <a href="{% url 'events:edit' %}?office=34" class="edit">
+                                        <i class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Editar"></i>
+                                    </a>
+                                    <a href="{% url 'events:delete' %}?parameter=holamundo" class="delete">
+                                        <i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Borrar"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}                
+                        <!-- FIN: Tablas-->
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
 {% endblock %}
