@@ -13,6 +13,7 @@ from events.forms import EventForm
 from .models import Event
 from .models import Category
 from .models import EventType
+from django.contrib.auth.models import User
 
 # Test
 
@@ -31,16 +32,38 @@ def list_events(request):
 def create_event(request):
     """ Allow to create new events """
     if request.method == 'POST':
-        pass
-        #categories = Category.objects.all()
-        #event_types = EventType.objects.all()
-        #context = {
-        #    'categories': categories,
-        #    'event_types': event_types
-        #}
+        try:
+            data = {}
+            data['event_pk'] = '0'
+            data['event_name'] = request.POST['event_name']
+            data['event_site'] = request.POST['event_site']
+            data['event_address'] = request.POST['event_address']
+            data['event_start_date'] = request.POST['event_start_date']
+            data['event_end_date'] = request.POST['event_end_date'] 
+            data['event_category'] = request.POST['event_category'] 
+            data['event_type'] = request.POST['event_type']
+            data['event_creator'] = request.user.id
+            form = EventForm(data)
+            
+            if form.is_valid():
+                Event.objects.create(
+                    event_name = data['event_name'],
+                    event_site = data['event_site'],
+                    event_address = data['event_address'], 
+                    event_start_date = data['event_start_date'], 
+                    event_end_date = data['event_end_date'] ,
+                    event_category = Category.objects.get(pk = data['event_category']), 
+                    event_type = EventType.objects.get(pk = data['event_type']),
+                    event_creator = User.objects.get(pk = data['event_creator'])
+                )
+                
+                return redirect('events:myevents')
+
+        except ObjectDoesNotExist:
+            form = EventForm(initial = {'event_pk':'Error ocurrido durante la actualización, por favor reintente'})
     else:
-        form = EventForm()
-    print(form)
+        form = EventForm(initial = { 'event_creator': request.user })
+    
     return render(request, 
         'events/create.html', 
         context = {'form': form}
@@ -53,7 +76,18 @@ def edit_event(request):
     if request.method == 'POST':
         try:
             event = Event.objects.get(pk = request.POST['event_pk'], event_creator = request.user)
-            form = EventForm(request.POST)
+            data = {}
+            data['event_pk'] = request.POST['event_pk']
+            data['event_name'] = request.POST['event_name']
+            data['event_site'] = request.POST['event_site']
+            data['event_address'] = request.POST['event_address']
+            data['event_start_date'] = request.POST['event_start_date']
+            data['event_end_date'] = request.POST['event_end_date'] 
+            data['event_category'] = request.POST['event_category'] 
+            data['event_type'] = request.POST['event_type']
+            data['event_creator'] = request.user.id
+
+            form = EventForm(data)
             if form.is_valid():
                 event.event_name = request.POST['event_name']
                 event.event_site = request.POST['event_site']

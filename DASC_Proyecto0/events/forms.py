@@ -21,7 +21,7 @@ class EventForm(forms.Form):
 
     event_category = forms.ModelChoiceField(queryset=Category.objects.all(),empty_label=None, widget=forms.Select(attrs={'class':'form-control'}) )
     event_type = forms.ModelChoiceField(queryset=EventType.objects.all(),empty_label=None, widget=forms.Select(attrs={'class':'form-control'}) )
-    event_creator = forms.ModelChoiceField(queryset=User.objects.all(),empty_label=None, widget=forms.Select(attrs={'class':'form-control', 'readonly': None}) )    
+    event_creator = forms.ModelChoiceField(queryset=User.objects.all(),empty_label=None, widget=forms.Select(attrs={'class':'form-control', 'disabled': None}) )    
     
     def clean(self):
         """ Verify event """
