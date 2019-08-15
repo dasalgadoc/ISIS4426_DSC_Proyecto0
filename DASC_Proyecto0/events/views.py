@@ -51,36 +51,44 @@ def create_event(request):
 def edit_event(request):
     """ Edit information for event """
     if request.method == 'POST':
-        pass
-        #categories = Category.objects.all()
-        #event_types = EventType.objects.all()
-        #context = {
-        #    'categories': categories,
-        #    'event_types': event_types
-        #}
+        try:
+            event = Event.objects.get(pk = request.POST['event_pk'], event_creator = request.user)
+            form = EventForm(request.POST)
+            if form.is_valid():
+                event.event_name = request.POST['event_name']
+                event.event_site = request.POST['event_site']
+                event.event_address = request.POST['event_address']
+                event.event_start_date = request.POST['event_start_date']
+                event.event_end_date = request.POST['event_end_date']
+                event.event_category = Category.objects.get(pk = request.POST['event_category'])
+                event.event_type = EventType.objects.get(pk = request.POST['event_type'])
+                event.save()
+
+                return redirect('events:myevents')
+        except ObjectDoesNotExist:
+            form = EventForm(initial = {'event_pk':'Error ocurrido durante la actualización, por favor reintente'})
     else:
         try:
             event = Event.objects.get(pk = request.GET['event'], event_creator = request.user )
             data = {
+                'event_pk': event.id,
                 'event_name': event.event_name,
                 'event_site': event.event_site,
                 'event_address': event.event_address,
                 'event_start_date': event.event_start_date,
                 'event_end_date': event.event_end_date,
                 'event_category': event.event_category,
-                'event_type': event.event_type
+                'event_type': event.event_type,
+                'event_creator': event.event_creator
             }
             form = EventForm(initial = data)
-            error = None
         except ObjectDoesNotExist:
-            form = None
-            error = 'Evento no encontrado, por favor reintente'
-        print(form)
+            form = EventForm(initial = {'event_pk':'Evento no encontrado, por favor reintente'})
+            
     return render(request, 
         'events/edit.html', 
         context = {
-            'form': form, 
-            'error': error
+            'form': form
         })
 
 
